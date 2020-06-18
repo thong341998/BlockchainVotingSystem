@@ -1,5 +1,9 @@
 import React from "react";
 
+const goToVotingScreen = () =>{
+    console.log('Go to voting Screen');
+}
+
 const VotingList = () => (
     <div className="container">
         <table class="table">
@@ -13,9 +17,9 @@ const VotingList = () => (
                 <tr>
                     <th scope="row">1</th>
                     <td>
-                        <button className="btn btn-primary btn-sm">
+                        <a style = {{color:'white'}} href="../Voter/VotingScreen" className = "btn btn-default" onClick = {goToVotingScreen} className="btn btn-primary btn-sm">
                             Start voting
-                        </button>
+                        </a>
                         <button className="btn btn-success btn-sm ml-2">
                             Info
                         </button>
