@@ -51,11 +51,11 @@ CREATE TABLE VoteTransaction(
 );
 
 
-DROP TABLE Account;
+/*DROP TABLE Account;
 DROP TABLE Candidate;
 DROP TABLE Vote;
 DROP TABLE VoteTransaction;
-DROP TABLE VoteBlock
+DROP TABLE VoteBlock*/
 
 
 
