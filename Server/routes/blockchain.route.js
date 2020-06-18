@@ -49,6 +49,16 @@ router.get('/history', (req, res, next) => {
   res.json({result});
 })
 
+router.get('/block', (req, res, next) => {
+  var result=[];
+  for(const block of myChain.chain){
+   
+      result.push(block)
+
+  }
+  res.json({result});
+})
+
 
 router.post('/vote',async (req, res, next) => { 
   
@@ -69,5 +79,7 @@ router.post('/vote',async (req, res, next) => {
 
   res.json({result})
 })
+
+
 
 module.exports = router;
