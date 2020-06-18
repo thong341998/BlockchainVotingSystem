@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Nav from "../Nav";
 import NavAd from "./NavAd";
+import AdRoutes from "../../routers/AdRoutes";
 class Admin extends Component {
     render() {
         return (
@@ -16,7 +17,9 @@ class Admin extends Component {
                             </div>
                         </div>
                         <div className="col-sm-9">
-                            <div className="container mt-4"></div>
+                            <div className="container mt-4">
+                                <AdRoutes />
+                            </div>
                         </div>
                     </div>
                 </div>

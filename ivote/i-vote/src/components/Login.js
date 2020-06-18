@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 class Login extends Component {
     render() {
         return (
@@ -12,7 +13,7 @@ class Login extends Component {
                             Sign up
                         </a>
                         <h4 className="card-title mb-4 mt-1">Sign in</h4>
-                        <form>
+                        <fomr>
                             <div className="form-group">
                                 <label>Your email</label>
                                 <input
@@ -33,15 +34,15 @@ class Login extends Component {
                                 />
                             </div>{" "}
                             <div className="form-group mt-3">
-                                <button
-                                    type="submit"
+                                <Link
                                     className="btn btn-primary btn-block"
+                                    to="/admin"
                                 >
                                     {" "}
                                     Login
-                                </button>
+                                </Link>
                             </div>{" "}
-                        </form>
+                        </fomr>
                     </article>
                 </div>
             </div>
