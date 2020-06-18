@@ -4,7 +4,7 @@ CREATE TABLE Account(
  ID INTEGER NOT NULL,
  Username TEXT,
  Pass TEXT,
- PublicKey TEXT(256) NOT NULL,
+ PublicKey VARCHAR(256) NOT NULL,
  DisplayName TEXT,
  PRIMARY KEY (ID)
 );
@@ -15,7 +15,7 @@ CREATE TABLE Vote(
  Content TEXT,
  StartDay DateTime,
  EndDay DateTime,
- IsClose BLOB,
+ IsClose BIT,
  PRIMARY KEY (ID)
 );
 
@@ -32,7 +32,7 @@ CREATE TABLE Candidate(
 CREATE TABLE VoteRelatedVoter(
  ID INTEGER NOT NULL,
  VoteID INTEGER NOT NULL,
- VoterPublicKey TEXT(256) NOT NULL,
+ VoterPublicKey VARCHAR(256) NOT NULL,
  
  PRIMARY KEY(ID),
  FOREIGN KEY (VoteID) REFERENCES Vote(ID),
