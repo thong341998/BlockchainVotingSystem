@@ -27,7 +27,7 @@ router.post('/login', (req, res, next) => {
     //     req.body.publicKey
     //     req.body.privateKey
     // }
-    var {publicKey,privateKey} = req.body;
+    var {publicKey,privateKey,usermane} = req.body;
     var priKey = ec.keyFromPrivate(privateKey);
     if (priKey.getPublic('hex') == publicKey) {
         return res.status(200).json({ usermane, publicKey, privateKey });

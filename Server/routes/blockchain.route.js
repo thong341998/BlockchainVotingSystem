@@ -21,7 +21,13 @@ blockmodel.find(function(err,re){
 router.get('/posting',async (req, res, next) => {
   let {VoteId}=req.body;
   let result = await posting.findOne({"_id":VoteId});
-  res.json(result);
+  let tem =[...result.ListpersonId]
+  for(var i=0 ;i<tem.length;i++){
+    tem[i]=0;
+  }
+  let KQ = await myChain.getBalanceOfAddress(VoteId,tem);
+ 
+  res.json({result,KQ});
 
 })
 
