@@ -85,21 +85,23 @@ const LoginScreen = (props) => {
     }
 
     const onPressLogin = async () => {
-        if (data.isValidUser && data.isValidPassword) {
+        // if (data.isValidUser && data.isValidPassword) {
       
-            // await Axios.post('http://child-safety-api.herokuapp.com/api/auth/signin', {
-            //     username: data.username,
-            //     password: data.password
-            // })
-            // .then(response =>
-            //     {
-            //         props.navigation.navigate(ScreenKey.AdminHomeScreen);
-            //     })
-            // .catch(error => console.log("loi dang nhap"));
-            if (data.username === 'admin' && data.password === 'admin'){
-                props.navigation.navigate(ScreenKey.AdminHomeScreen);
-            }
-        }
+        //     // await Axios.post('http://child-safety-api.herokuapp.com/api/auth/signin', {
+        //     //     username: data.username,
+        //     //     password: data.password
+        //     // })
+        //     // .then(response =>
+        //     //     {
+        //     //         props.navigation.navigate(ScreenKey.AdminHomeScreen);
+        //     //     })
+        //     // .catch(error => console.log("loi dang nhap"));
+        //     if (data.username === 'admin' && data.password === 'admin'){
+        //         props.navigation.navigate(ScreenKey.MainBottomTab);
+        //     }
+        // }
+        props.navigation.navigate(ScreenKey.MainBottomTab);
+
     }
 
     return (
@@ -172,23 +174,6 @@ const LoginScreen = (props) => {
                         autoCapitalize="none"
                         onChangeText={(val) => handlePasswordChange(val)}
                     />
-                    {/* <TouchableOpacity
-                        onPress={updateSecureTextEntry}
-                    >
-                        {data.secureTextEntry ?
-                            <Feather
-                                name="eye-off"
-                                color="grey"
-                                size={20}
-                            />
-                            :
-                            <Feather
-                                name="eye"
-                                color="grey"
-                                size={20}
-                            />
-                        }
-                    </TouchableOpacity> */}
                 </View>
                 {data.isValidPassword ? null :
                     <Animatable.View animation="fadeInLeft" duration={500}>

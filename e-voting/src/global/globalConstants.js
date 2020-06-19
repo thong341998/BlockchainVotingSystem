@@ -7,5 +7,7 @@ export const ScreenKey = {
     SplashScreen: 'splashScreen',
     HomeStack: 'homeStack',
     ElectionScreen: 'electionScreen',
-
+    TransactionScreen: 'transactionScreen',
+    MainBottomTab: 'mainBottomTab',
+    
 }

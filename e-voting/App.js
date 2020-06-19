@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { ScreenKey } from './src/global/globalConstants';
 import LoginScreen from './src/components/Login/LoginScreen';
 import ElectionScreen from './src/components/Admin/Election/ElectionScreen';
+import MainBottomTab from './src/routes/MainBottomTab';
 
 
 const Stack = createStackNavigator();
@@ -18,9 +19,9 @@ const AppStackNavigator = () => {
         component={LoginScreen}
         options={{ headerShown: false }} />
       <Stack.Screen
-        name={ScreenKey.AdminHomeScreen}
-        component={AdminHome}
-        options={{ headerShown: true, title: 'Admin home screen' }} />
+        name={ScreenKey.MainBottomTab}
+        component={MainBottomTab}
+        options={{ headerShown: false, title: 'Admin home screen' }} />
       <Stack.Screen
         name={ScreenKey.ElectionScreen}
         component={ElectionScreen}
