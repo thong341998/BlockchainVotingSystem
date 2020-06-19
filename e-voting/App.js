@@ -12,11 +12,11 @@ import ElectionScreen from './src/components/Admin/Election/ElectionScreen';
 const Stack = createStackNavigator();
 const AppStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={navigationStyle.defaultNavigationOptions} initialRouteName={ScreenKey.AdminHome}>
-      {/* <Stack.Screen
+    <Stack.Navigator screenOptions={navigationStyle.defaultNavigationOptions} initialRouteName={ScreenKey.LoginScreen}>
+      <Stack.Screen
         name={ScreenKey.LoginScreen}
         component={LoginScreen}
-        options={{ headerShown: false }} /> */}
+        options={{ headerShown: false }} />
       <Stack.Screen
         name={ScreenKey.AdminHomeScreen}
         component={AdminHome}

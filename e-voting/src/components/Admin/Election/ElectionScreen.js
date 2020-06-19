@@ -51,6 +51,8 @@ export default function ElectionScreen(props) {
     }
 
     const AddCandidate = (candidateName) => {
+
+        
         setModalOpen(false);
     }
 
@@ -159,7 +161,7 @@ export default function ElectionScreen(props) {
 
                     onPress={EndElection}
                 >
-                    <Text>End election</Text>
+                    <Text>Stop voting</Text>
                 </TouchableOpacity>
             </View>
 
