@@ -2,41 +2,25 @@ var express = require('express');
 
 var router = express.Router();
 var randomstring = require("randomstring");
+let posting = require('../model/posting');
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
 var {Transaction, Blockchain} = require("../middlewares/blockchain");
 var myChain = new Blockchain();
 
 
-router.post('/info', (req, res, next) => {
-  var publicKey = req.body.address;
-  var privateKey =req.body.password;
-  var priKey = ec.keyFromPrivate(privateKey);
-  if(priKey.getPublic('hex')==publicKey){
-    var coin = myChain.getBalanceOfAddress(publicKey);
-    var transfers=[];
-    for(const block of myChain.chain){
-      for(const trans of block.transactions){
-          // Nếu address cần kiểm tra số dư là người gửi, hãy giảm balance
-          if(trans.fromAddress === publicKey){
-             transfers.push(trans);
-          }
-          // Nếu address cần kiểm tra số dư là người nhận, hãy tăng balance
-          if(trans.toAddress === publicKey){
-              transfers.push(trans);
-          }
-      }
-    }
-    res.render('infodetail',{coin,publicKey,transfers,privateKey})
-  }else{
-    res.redirect("/info")
-  }
- 
+router.get('/posting',async (req, res, next) => {
+  let {VoteId}=req.body;
+  let result = await posting.findOne({"_id":VoteId});
+  res.json(result);
+
 })
 
-router.get('/posting', (req, res, next) => {
-  // get db
-  // res.json({VoteId,ListpersonId,title,content})
+router.post('/posting',async (req, res, next) => {
+ let {content,title,ListpersonId}= req.body;
+
+ let result = await posting.insertMany({content,title,ListpersonId});
+ res.json(result);
 })
 
 router.get('/history', (req, res, next) => {
@@ -59,23 +43,27 @@ router.get('/block', (req, res, next) => {
   res.json({result});
 })
 
-
 router.post('/vote',async (req, res, next) => { 
-  
-  var {publicKey,privateKey,VoteId,ListpersonId,personId} =req.body;
-
+  var {publicKey,privateKey,VoteId,personId} =req.body;
+  let re = await posting.findOne({"_id":VoteId});
   const myKey = ec.keyFromPrivate(privateKey);
-  const tx1 = new Transaction(publicKey, VoteId,ListpersonId,personId);
+  const tx1 = new Transaction(publicKey, VoteId,re.ListpersonId,personId);
   tx1.signTransaction(myKey);
   myChain.addTransaction(tx1);
  
   console.log('Starting the miner:');
   myChain.minePendingTransactions();
 
+  
+  let tem =[...re.ListpersonId]
+  for(var i=0 ;i<tem.length;i++){
+    tem[i]=0;
+  }
+  // console.log("tem: ",tem)
 
-  console.log('address2 is', myChain.getBalanceOfAddress(VoteId,[0,0,0]));
+  console.log('address2 is', myChain.getBalanceOfAddress(VoteId,tem));
 
-  let result = await myChain.getBalanceOfAddress(VoteId,[0,0,0]);
+  let result = await myChain.getBalanceOfAddress(VoteId,tem);
 
   res.json({result})
 })

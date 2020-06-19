@@ -1,6 +1,8 @@
 const SHA256 = require("crypto-js/sha256");
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
+let transmodel = require('../model/transaction');
+let blockmodel = require('../model/block');
 class Block {
     constructor(timestamp, transactions, previousHash = '') {
         this.previousHash = previousHash;
@@ -38,11 +40,20 @@ class Blockchain {
 
         // Nơi lưu trữ các transaction đang chờ được xữ lý để đưa vào block
         this.pendingTransactions = [];
-
-      
+     
     }
     createFirstBlock() {
+        // let a = await blockmodel.find();
+        // console.log(...a)
+        // if(a.length===0){
+        //     let tempt = new Block("01/06/2020", [], "0");
+        //     return tempt
+        // }else{
+        //     let t = (...a);
+        //     return t
+        // }
         return new Block("01/06/2020", [], "0");
+        
     }
 
     getLatestBlock() {
@@ -61,6 +72,8 @@ class Blockchain {
     
         // Thêm block vừa được đào vào chuỗi
         this.chain.push(block);
+        // console.log("block ",)
+        blockmodel.insertMany(block);
     }
     addTransaction(transaction) {
         // Verify the transactiion
@@ -74,10 +87,13 @@ class Blockchain {
 
         this.pendingTransactions = [];
         this.pendingTransactions.push(transaction);
+        // console.log("transaction: ",transaction)
+        transmodel.insertMany(transaction);
     }
 
 
     getBalanceOfAddress(VoteId,listVote) {
+
         let result = [...listVote];
 
         // Lặp qua từng block và các transaction bên trong một block
@@ -125,8 +141,8 @@ class Blockchain {
 
 
 class Transaction {
-    constructor(fromAddress, VoteId, ListpersonId,personId) {
-        this.fromAddress = fromAddress;
+    constructor(pubKey, VoteId, ListpersonId,personId) {
+        this.pubKey = pubKey;
         this.VoteId = VoteId;
         this.ListpersonId = ListpersonId;
         this.personId = personId;
@@ -137,8 +153,8 @@ class Transaction {
       }
     signTransaction(signingKey) {
         // You can only send a transaction from the wallet that is linked to your
-        // key. So here we check if the fromAddress matches your publicKey
-        if (signingKey.getPublic('hex') !== this.fromAddress) {
+        // key. So here we check if the pubKey matches your publicKey
+        if (signingKey.getPublic('hex') !== this.pubKey) {
             throw new Error('You cannot sign transactions for other wallets!');
         }
 
@@ -148,16 +164,13 @@ class Transaction {
         this.signature = sig.toDER('hex');
     }
     isValid() {
-        // If the transaction doesn't have a from address we assume it's a
-        // mining reward and that it's valid. You could verify this in a
-        // different way (special field for instance)
-        if (this.fromAddress === null) return true;
+        if (this.pubKey === null) return true;
 
         if (!this.signature || this.signature.length === 0) {
             throw new Error('No signature in this transaction');
         }
 
-        const publicKey = ec.keyFromPublic(this.fromAddress, 'hex');
+        const publicKey = ec.keyFromPublic(this.pubKey, 'hex');
         return publicKey.verify(this.calculateHash(), this.signature);
     }
 }
