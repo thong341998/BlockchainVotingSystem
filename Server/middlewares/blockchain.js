@@ -28,32 +28,31 @@ class Block {
             return false;
           }
         }
-    
         return true;
       }
 
 }
 class Blockchain {
     constructor() {
-        this.chain = [this.createFirstBlock()];
+        // console.log("abc: ",this.createFirstBlock())
+        this.chain = [];
         this.difficulty = 1;
 
         // Nơi lưu trữ các transaction đang chờ được xữ lý để đưa vào block
         this.pendingTransactions = [];
      
     }
-    createFirstBlock() {
-        // let a = await blockmodel.find();
-        // console.log(...a)
-        // if(a.length===0){
-        //     let tempt = new Block("01/06/2020", [], "0");
-        //     return tempt
-        // }else{
-        //     let t = (...a);
-        //     return t
-        // }
-        return new Block("01/06/2020", [], "0");
-        
+    createFirstBlock(block) {
+        // blockmodel.find(function(err,re){
+        //     // console.log(re)
+        //     return [...re]
+        // })
+        // return new Block("01/06/2020", [], "0");  
+        this.chain=[block];
+    }
+
+    newbockchain(block){
+        this.chain=block;
     }
 
     getLatestBlock() {
@@ -97,7 +96,7 @@ class Blockchain {
         let result = [...listVote];
 
         // Lặp qua từng block và các transaction bên trong một block
-       
+        // console.log("chain: ",this.chain)
         for (const block of this.chain) {
             for (const trans of block.transactions) {
                 // Nếu address cần kiểm tra số dư là người gửi, hãy giảm balance

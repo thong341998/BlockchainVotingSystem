@@ -3,10 +3,19 @@ var express = require('express');
 var router = express.Router();
 var randomstring = require("randomstring");
 let posting = require('../model/posting');
+var blockmodel =require('../model/block');
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
-var {Transaction, Blockchain} = require("../middlewares/blockchain");
+var {Transaction, Blockchain,Block} = require("../middlewares/blockchain");
 var myChain = new Blockchain();
+
+blockmodel.find(function(err,re){
+  if(re.length===0){
+    myChain.createFirstBlock(new Block("01/06/2020", [], "0"))
+  }else{
+    myChain.newbockchain(re)
+  }
+})
 
 
 router.get('/posting',async (req, res, next) => {
