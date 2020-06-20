@@ -3,8 +3,8 @@ import { StyleSheet, Text, View } from 'react-native'
 
 export default function TransactionScreen() {
     return (
-        <View>
-            <Text></Text>
+        <View style = {{flex:1,justifyContent:'center',alignItems:'center'}}>
+            <Text>This is transction screen</Text>
         </View>
     )
 }

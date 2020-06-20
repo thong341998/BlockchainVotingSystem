@@ -27,7 +27,8 @@ const CandidateItem = (props) => {
 }
 
 export default function ElectionScreen(props) {
-    let { election } = props.route.params.election;
+    let  election  = props.route.params.election;
+    //console.log('',);
 
     const [modalOpen, setModalOpen] = useState(false);
     const [candidateName, setCandidateName] = useState('');
@@ -46,6 +47,78 @@ export default function ElectionScreen(props) {
         }
     ]);
 
+    const showStartVotingButton = () =>{
+        if (election.status  === 0)
+            return ( <TouchableOpacity
+                    style={{
+                        backgroundColor: 'blue',
+                        borderRadius: 5,
+                        width: 100,
+                        height: 50,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginLeft: 10,
+                        alignSelf: 'center',
+                        marginTop: 10
+                    }}
+
+                    onPress={() => AddElection()}
+                >
+                    <Text>Start voting</Text>
+                </TouchableOpacity>
+                )
+        return null;
+    }
+
+
+
+    const showAddCandidateButton = () =>{
+        if (election.status === 0 ){
+            return (<TouchableOpacity
+                    style={{
+                        backgroundColor: 'blue',
+                        borderRadius: 5,
+                        width: 100,
+                        height: 50,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginLeft: 10,
+                        alignSelf: 'center',
+                        marginTop: 10
+                    }}
+
+                    onPress={() => setModalOpen(true)}
+                >
+                    <Text>Add candidate</Text>
+                </TouchableOpacity>)
+        }
+        return null;
+    }
+
+    const showCloseVotingButton = () =>{
+        if (election.status === 1){
+            return (
+                <TouchableOpacity
+                    style={{
+                        backgroundColor: 'red',
+                        borderRadius: 5,
+                        width: 100,
+                        height: 50,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginLeft: 10,
+                        alignSelf: 'center',
+                        marginTop: 10
+                    }}
+
+                    onPress={EndElection}
+                >
+                    <Text>Stop voting</Text>
+                </TouchableOpacity>
+                )
+        }
+        return null;
+    }
 
     const EndElection = () => {
 
@@ -182,58 +255,9 @@ export default function ElectionScreen(props) {
             </Modal>
 
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                <TouchableOpacity
-                    style={{
-                        backgroundColor: 'blue',
-                        borderRadius: 5,
-                        width: 100,
-                        height: 50,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginLeft: 10,
-                        alignSelf: 'center',
-                        marginTop: 10
-                    }}
-
-                    onPress={() => AddElection()}
-                >
-                    <Text>Start voting</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={{
-                        backgroundColor: 'blue',
-                        borderRadius: 5,
-                        width: 100,
-                        height: 50,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginLeft: 10,
-                        alignSelf: 'center',
-                        marginTop: 10
-                    }}
-
-                    onPress={() => setModalOpen(true)}
-                >
-                    <Text>Add candidate</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={{
-                        backgroundColor: 'red',
-                        borderRadius: 5,
-                        width: 100,
-                        height: 50,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginLeft: 10,
-                        alignSelf: 'center',
-                        marginTop: 10
-                    }}
-
-                    onPress={EndElection}
-                >
-                    <Text>Stop voting</Text>
-                </TouchableOpacity>
+               {showStartVotingButton()}
+                {showAddCandidateButton()}
+               {showCloseVotingButton()}
             </View>
 
         </View>

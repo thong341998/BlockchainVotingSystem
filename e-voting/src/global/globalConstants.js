@@ -9,5 +9,6 @@ export const ScreenKey = {
     ElectionScreen: 'electionScreen',
     TransactionScreen: 'transactionScreen',
     MainBottomTab: 'mainBottomTab',
+    PendingTransactionScreen:'pendingTransactionScreen'
     
 }

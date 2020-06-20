@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, FlatList, TouchableOpacity, Dimensions, TextInp
 import Modal from 'react-native-modal';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ScreenKey } from '../../../global/globalConstants';
-import DatePicker from 'react-native-datepicker'
+import DatePicker from 'react-native-datepicker';
+import StatusRound from '../../Common/status-round';
 
 
 const Card = (props) => {
@@ -28,16 +29,19 @@ export default function AdminHome(props) {
 
     const [elections, setElections] = useState([
         {
+            voteId: 0,
+            title: 'Election 1',
+            status:0,
+        },
+        {
             voteId: 1,
-            title: 'Election 1'
+            title: 'Election 2',
+            status:1
         },
         {
             voteId: 2,
-            title: 'Election 2'
-        },
-        {
-            voteId: 3,
-            title: 'Election 3'
+            title: 'Election 3',
+            status:2
         }
     ])
 
@@ -54,6 +58,7 @@ export default function AdminHome(props) {
             }}>
                 <Card>
                     <Text style={styles.titleText}>{item.title}</Text>
+                    <StatusRound style = {{marginLeft:40}} status = {item.status} />
                 </Card>
             </TouchableOpacity>
         );
@@ -63,7 +68,8 @@ export default function AdminHome(props) {
         if (electionName){
             let election = {
                 voteId: elections.length + 1,
-                title: electionNamesta
+                title: electionNamesta,
+                status:0,
             }
             
             setElections((currentElections) =>{
@@ -217,6 +223,7 @@ const styles = StyleSheet.create({
     cardContent: {
         marginHorizontal: 18,
         marginVertical: 20,
+        flexDirection:'row',
     },
     titleText: {
         fontSize: 18,
