@@ -8,7 +8,8 @@ app.use(express.json());
 
 require('./middlewares/blockchain');
 
-const uri ='mongodb://localhost/blockchain' // có thể link mongo onl cũng đc
+// const uri ='mongodb://localhost/blockchain' // có thể link mongo onl cũng đc
+const uri = "mongodb+srv://baoson:baoson123@cluster0-mbckw.mongodb.net/<dbname>?retryWrites=true&w=majority";
 mongoose.connect(
   uri,
   { useNewUrlParser: true, useUnifiedTopology: true },
