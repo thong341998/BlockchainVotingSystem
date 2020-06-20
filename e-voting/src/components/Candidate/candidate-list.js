@@ -36,7 +36,6 @@ export default function  CandidateList(props){
 
 	return (
 		<View style ={{flex:1}}>
-		<ScrollView style = {{marginTop:40}}>
 		<FlatList
 		 data = {props.candidates}
 		 renderItem = {({item}) =>
@@ -44,7 +43,6 @@ export default function  CandidateList(props){
 		 }
 		 ItemSeparatorComponent = {() => renderSeperator()} 
 		/>
-		</ScrollView>
 		</View>
 	);
 }

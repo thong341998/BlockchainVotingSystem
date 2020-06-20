@@ -3,7 +3,12 @@ import {StyleSheet} from 'react-native';
 
 export const navigationName = {
 	voteScreen:'Vote',
-	candidateScreen:'Candidate'
+	candidateScreen:'Candidate',
+	viewVoteScreen:'ViewVote',
+	viewMyVoteScreen:'ViewMyVote',
+	blockchainHistory:'BlockchainHistory',
+	candidateScreenStack:'CandidateStack',
+	voteStack:'VoteStack'
 }
 
 export const globalStyles = StyleSheet.create({
