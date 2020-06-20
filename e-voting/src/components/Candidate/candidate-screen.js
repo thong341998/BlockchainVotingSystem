@@ -7,6 +7,8 @@ import {globalStyles} from '../../global/globalConstants'
 export default function  CandidateScreen(props){
 
 	const vote = props.route.params.vote;
+	const readonly = props.route.params.readonly;
+	const selectedIndex = props.route.params.selectedIndex;
 	const getCandidate = () =>{
 		const result = [];
 		vote.candidateIds.forEach((id) =>{
@@ -34,7 +36,7 @@ export default function  CandidateScreen(props){
 			}}>
 		<Text style = {styles.description}>{vote.startDay} - {vote.endDay}</Text>
 		</View>
-		<CandidateList navigation = {props.navigation} candidates = {getCandidate()} />
+		<CandidateList selectedIndex ={selectedIndex}  readonly = {readonly} navigation = {props.navigation} candidates = {getCandidate()} />
 		</ScrollView>
 	);
 }

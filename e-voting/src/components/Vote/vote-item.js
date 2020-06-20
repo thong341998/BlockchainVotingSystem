@@ -2,9 +2,14 @@ import React from 'react';
 import {View, StyleSheet, Text, TouchableWithoutFeedback} from 'react-native';
 import StatusRound from '../../components/Common/status-round';
 
+
+
+
 export default function  VoteItem(props){
 
 	const vote = props.vote;
+	
+
 	return (
 		<TouchableWithoutFeedback onPress = {props.onPress}>
 		<View style = {{marginVertical:10}}>

@@ -6,7 +6,8 @@ import CandidateButton from './candidate-button';
 export default function  CandidateList(props){
 
 	const onCandidateButtonPress = (candidate) =>{
-		Alert.alert(
+		if (!props.readonly){
+			Alert.alert(
 			"Voting Confirm",
 			`Are you sure you want to vote for ${candidate.name}`,
 			[
@@ -21,6 +22,8 @@ export default function  CandidateList(props){
 			],
 			{cancelabel:false}
 			)
+		}
+		
 	}
 
 	const renderSeperator = () =>{
@@ -34,14 +37,19 @@ export default function  CandidateList(props){
 			)
 	}
 
+	const isSelectedCandidate = (candidate, selectedId) =>{
+		return (candidate.id === selectedId);
+	}
+
 	return (
 		<View style ={{flex:1}}>
 		<FlatList
 		 data = {props.candidates}
 		 renderItem = {({item}) =>
-		 	<CandidateButton onPress = {() => onCandidateButtonPress(item)} candidate = {item} />
+		 	<CandidateButton isSelected = {isSelectedCandidate(item,props.selectedIndex)} onPress = {() => onCandidateButtonPress(item)} candidate = {item} />
 		 }
-		 ItemSeparatorComponent = {() => renderSeperator()} 
+		 ItemSeparatorComponent = {() => renderSeperator()}
+		 keyExtractor = {item => item.id} 
 		/>
 		</View>
 	);
