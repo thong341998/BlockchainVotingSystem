@@ -28,8 +28,6 @@ export default function  VoteList(props){
 
 	const getSelectedItemId = (vote) =>{
 		if (props.readonly){
-			console.log('my account transaction: ',accountTransactions);
-			console.log('vote id: ', vote.id);
 			var relatedTransactionVoteData = accountTransactions.find(trans => trans.data.voteId === vote.id).data;
 			return relatedTransactionVoteData.candidateId;
 		}
