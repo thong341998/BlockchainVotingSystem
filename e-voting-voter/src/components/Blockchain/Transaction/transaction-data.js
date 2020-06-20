@@ -7,7 +7,6 @@ export const transactions = [
 	isPending:false,
 	createTime:'20/9/2020',
 	data:{
-
 		voteId:0,
 		candidateId:1,
 	}

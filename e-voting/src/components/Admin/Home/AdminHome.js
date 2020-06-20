@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, FlatList, TouchableOpacity, Dimensions, TextInp
 import Modal from 'react-native-modal';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ScreenKey } from '../../../global/globalConstants';
+import DatePicker from 'react-native-datepicker'
+
 
 const Card = (props) => {
     return (
@@ -19,6 +21,10 @@ var screenWidth = Dimensions.get('window').width;
 export default function AdminHome(props) {
     const [modalOpen, setModalOpen] = useState(false);
     const [electionName, setElectionName] = useState('');
+    const [electionDescription,setElectionDescription] = useState('');
+    const [startDay,setStartDay] = useState();
+    const [endDay, setEndDay] = useState();
+
 
     const [elections, setElections] = useState([
         {
@@ -57,7 +63,7 @@ export default function AdminHome(props) {
         if (electionName){
             let election = {
                 voteId: elections.length + 1,
-                title: electionName
+                title: electionNamesta
             }
             
             setElections((currentElections) =>{
@@ -87,10 +93,63 @@ export default function AdminHome(props) {
                     <TextInput placeholder='Election name' style={{
                         width: screenWidth - 100,
                         margin: 10,
-                        height: 80
+                        height: 15
                     }}
                     onChangeText={text => setElectionName(text)}
                     />
+                    <TextInput placeholder='Election description' style={{
+                        width: screenWidth - 100,
+                        margin: 10,
+                        height: 20
+                    }}
+                    onChangeText={text => setElectionDescription(text)}
+                    />
+
+                    <DatePicker
+        style={{width: 200,marginBottom:15}}
+        mode="date"
+        date = {startDay}
+        placeholder="Start Day"
+        format="DD/MM/YYYY"
+        confirmBtnText="Confirm"
+        cancelBtnText="Cancel"
+        customStyles={{
+          dateIcon: {
+            position: 'absolute',
+            left: 0,
+            top: 4,
+            marginLeft: 0
+          },
+          dateInput: {
+            marginLeft: 36
+          }
+          // ... You can check the source to find the other keys.
+        }}
+        onDateChange={(date) => setStartDay(date)}
+      />
+
+       <DatePicker
+        style={{width: 200,marginBottom:15}}
+        mode="date"
+        date = {endDay}
+        placeholder="End Day"
+        format="DD/MM/YYYY"
+        confirmBtnText="Confirm"
+        cancelBtnText="Cancel"
+        customStyles={{
+          dateIcon: {
+            position: 'absolute',
+            left: 0,
+            top: 4,
+            marginLeft: 0
+          },
+          dateInput: {
+            marginLeft: 36
+          }
+          // ... You can check the source to find the other keys.
+        }}
+        onDateChange={(date) => setEndDay(date)}
+      />
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <TouchableOpacity
                             style={{
@@ -186,8 +245,8 @@ const styles = StyleSheet.create({
     },
     modalContent: {
         width: screenWidth - 80,
-        height: 250,
-        justifyContent: 'center',
+        height: 300,
+        //justifyContent: 'center',
         backgroundColor: '#fff'
     }
 })

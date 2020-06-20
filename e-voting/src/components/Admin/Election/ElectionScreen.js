@@ -1,44 +1,26 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, TextInput, Alert } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, TextInput, Alert, FlatList } from 'react-native'
 import Modal from 'react-native-modal';
 import Axios from 'axios';
 
 var screenWidth = Dimensions.get('window').width;
 
-const VoteItem = (props) => {
+const CandidateItem = (props) => {
     return (
         <TouchableOpacity style={{ flexDirection: 'row', backgroundColor: '#fff', borderRadius: 10, justifyContent: 'space-between' }}>
             <View style={{ flexDirection: 'row' }}>
-                <Image source={{ uri: 'https://en.as.com/en/imagenes/2019/09/24/football/1569310945_447431_noticia_normal.jpg' }} style={{ width: 200, height: 100, margin: 10 }} />
                 <View style={{ flexDirection: 'column', justifyContent: 'flex-start' }}>
                     <Text style={{
-                        margin: 10,
+                        margin: 5,
                         fontSize: 16,
                         fontWeight: 'bold'
                     }}>{props.name}</Text>
                     <Text style={{
-                        margin: 10,
+                        margin: 5,
                         fontSize: 14,
-                    }}>Age: {props.age}</Text>
+                    }}>{props.description}</Text>
                 </View>
             </View>
-
-
-            <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start' }}>
-                <Text style={{
-                    margin: 10,
-                    fontSize: 16,
-                    fontWeight: 'bold'
-                }}>Votes</Text>
-                <Text style={{
-                    margin: 10,
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    color: 'red'
-                }}>{props.vote}</Text>
-            </View>
-
-
         </TouchableOpacity>
 
     );
@@ -49,17 +31,18 @@ export default function ElectionScreen(props) {
 
     const [modalOpen, setModalOpen] = useState(false);
     const [candidateName, setCandidateName] = useState('');
+    const [candidateDescription,setCandidateDescription] =useState(''); 
 
     const [candidates, setCandidates] = useState([
         {
+            id:0,
             name: 'Roanaldo',
-            age: 34,
-            vote: 0
+            description:'Vote for me'
         },
         {
+            id:1,
             name: 'Messi',
-            age: 30,
-            vote: 0
+            description:'Vote for me'
         }
     ]);
 
@@ -68,14 +51,13 @@ export default function ElectionScreen(props) {
 
     }
 
-    const AddCandidate = (candidateName) => {
-        console.log('candidateName', candidateName);
+    const AddCandidate = (candidateName,candidateDescription) => {
+        //console.log('candidateName', candidateName);
 
         let candidate = {
+            id: candidates.length + 1,
             name: candidateName,
-            age: 28,
-            vote: 0
-
+            description:candidateDescription
         }
         setCandidates((preCandidates) => {
             return [candidate, ...preCandidates];
@@ -100,7 +82,7 @@ export default function ElectionScreen(props) {
                 ListpersonId: candidates
             })
                 .then(response => {
-                    Alert.alert('Add election successfully !!!')
+                    Alert.alert('Election is now starting !!!')
                 })
                 .catch(error => console.log("loi dang nhap"));
         }
@@ -108,15 +90,30 @@ export default function ElectionScreen(props) {
     }
 
     const renderCandidate = (item, index) => {
-        return <VoteItem name={item.name} age={item.age}
+        return <CandidateItem name={item.name} description = {item.description}
             vote={0}
             key={index} />
     }
+
+    const renderSeperator = () =>{
+        return (
+             <View
+        style={[{
+          height: 0.75,
+          backgroundColor: "#CED0CE",
+        },props.titleStyle]}
+      />
+            )
+    }
+
     return (
         <View style={styles.container}>
-            {
-                candidates.map((item, index) => renderCandidate(item, index))
-            }
+            <FlatList
+            data = {candidates}
+            renderItem = {({item}) =>  <CandidateItem name={item.name} description = {item.description} />} 
+            ItemSeparatorComponent = {() => renderSeperator()}
+            keyExtractor = {item => item.id} 
+              />
 
             <Modal isVisible={modalOpen} animationType='slide'
                 style={{
@@ -135,9 +132,16 @@ export default function ElectionScreen(props) {
                     <TextInput placeholder='Candidate name' style={{
                         width: screenWidth - 100,
                         margin: 10,
-                        height: 80
+                        height: 20
                     }}
                         onChangeText={text => setCandidateName(text)}
+                    />
+                     <TextInput placeholder='Candidate description' style={{
+                        width: screenWidth - 100,
+                        margin: 10,
+                        height: 20
+                    }}
+                        onChangeText={text => setCandidateDescription(text)}
                     />
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <TouchableOpacity
@@ -152,7 +156,7 @@ export default function ElectionScreen(props) {
                             }}
 
                             onPress={() => {
-                                AddCandidate(candidateName)
+                                AddCandidate(candidateName,candidateDescription)
                             }}
                         >
                             <Text>Add</Text>
@@ -193,7 +197,7 @@ export default function ElectionScreen(props) {
 
                     onPress={() => AddElection()}
                 >
-                    <Text>Add Election</Text>
+                    <Text>Start voting</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{
