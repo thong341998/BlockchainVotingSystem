@@ -6,18 +6,19 @@ import ViewVoteScreen from './src/components/Vote/view-vote-screen';
 import ViewMyVoteScreen from './src/components/Vote/view-my-vote-screen';
 import BlockchainHistoryScreen from './src/components/Blockchain/blockchain-history-screen';
 import { NavigationContainer, DrawerNavigator } from '@react-navigation/native';
-import VoteStack from './src/components/Vote/vote-stack';
 import { createStackNavigator } from '@react-navigation/stack';
+import VoteStack from './src/components/Vote/vote-stack';
+import ViewMyVoteStack from './src/components/Vote/view-my-vote-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {navigationName} from './src/global/globalConstants';
-
+import LoginScreen from './src/components/Login/login-screen';
 
 const MainDrawerNavigator = () =>{
   const Drawer = createDrawerNavigator();
   return (
        <Drawer.Navigator>
   <Drawer.Screen options = {{title:'View Vote'}} name = {navigationName.voteStack} component = {VoteStack} />
-  <Drawer.Screen options = {{title:'View My Vote'}} name =  {navigationName.viewMyVoteScreen} component = {ViewMyVoteScreen} />
+  <Drawer.Screen options = {{title:'View My Vote'}} name =  {navigationName.viewMyVoteStack} component = {ViewMyVoteStack} />
   <Drawer.Screen options = {{title:'Blockchain History'}} name = {navigationName.blockchainHistory} component = {BlockchainHistoryScreen} />
   </Drawer.Navigator>
     )
@@ -25,15 +26,21 @@ const MainDrawerNavigator = () =>{
 }
 
 const MainStackNavigation = () =>{
-  const Stack  = createStacknavigator();
-  
+  const Stack  = createStackNavigator();
+  return (
+       <Stack.Navigator>
+  <Stack.Screen options = {{headerShown:false}} name = {navigationName.loginScreen} component = {LoginScreen} />
+  <Stack.Screen options = {{headerShown:false}} name = {navigationName.mainDrawerNavigator} component = {MainDrawerNavigator} />
+  </Stack.Navigator>
+    )
+ 
 }
 
 
 export default function App() {
   return (
     <NavigationContainer>
-     <MainDrawerNavigator/>
+     <MainStackNavigation />
     </NavigationContainer>
    // <CandidateScreen />
   );

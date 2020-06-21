@@ -6,9 +6,18 @@ import {navigationName} from '../../global/globalConstants';
 export default function  VoteList(props){
 	
 	const onVoteItemPress = (vote) =>{
-			props.navigation.navigate(navigationName.candidateScreenStack,{
-			screen:navigationName.candidateScreen,
-			params:{vote:vote, readonly:props.readonly, selectedIndex:getSelectedItemId(vote)}})
+
+			if (vote.status === 1){
+				props.navigation.navigate(navigationName.candidateScreenStack,{
+				screen:navigationName.candidateScreen,
+				params:{vote:vote, readonly:props.readonly, selectedIndex:getSelectedItemId(vote)}})
+			}
+			else{
+				props.navigation.navigate(navigationName.voteResultScreen,{
+					vote:vote
+				})
+			}
+			
 	}
 
 	const renderSeperator = () =>{

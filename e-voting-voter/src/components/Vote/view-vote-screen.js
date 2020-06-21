@@ -8,7 +8,7 @@ import VoteList from './vote-list';
 export default function  ViewVoteScreen({navigation}){
 
 	const myTransaction = transactions.filter(trans => trans.voterPublicKey === account.publicKey);
-	const cloneVotes = Array.from(elections);
+	const cloneVotes = elections.filter(vote => vote.status === 1 || vote.status === 2);
 	myTransaction.forEach(trans =>{
 		var voteIndex = cloneVotes.findIndex(e => e.id === trans.data.voteId);
 		cloneVotes.splice(voteIndex,1);

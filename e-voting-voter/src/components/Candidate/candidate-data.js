@@ -3,6 +3,7 @@ export const candidates = [
 {
 	id:0,
 	voteID:0,
+	accountID:2,
 	name:'Alex Young',
 	description:'Vote for me',
 },

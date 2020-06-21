@@ -16,7 +16,7 @@ export default function  VoteItem(props){
 		<Text style = {styles.title}>{vote.title}</Text>
 		<View style = {{flexDirection:'row', justifyContent:'space-between'}}>
 		<Text>{vote.voteCount} votes</Text>
-		<StatusRound isClose = {vote.isClose} />
+		<StatusRound status = {vote.status} />
 		</View>
 		</View>
 		</TouchableWithoutFeedback>

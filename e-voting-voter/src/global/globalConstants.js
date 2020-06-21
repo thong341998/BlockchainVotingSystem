@@ -8,7 +8,11 @@ export const navigationName = {
 	viewMyVoteScreen:'ViewMyVote',
 	blockchainHistory:'BlockchainHistory',
 	candidateScreenStack:'CandidateStack',
-	voteStack:'VoteStack'
+	voteStack:'VoteStack',
+	viewMyVoteStack:'MyVoteStack',
+	voteResultScreen:'VoteResult',
+	loginScreen:'Login',
+	mainDrawerNavigator:'mainDrawerNavigator'
 }
 
 export const globalStyles = StyleSheet.create({

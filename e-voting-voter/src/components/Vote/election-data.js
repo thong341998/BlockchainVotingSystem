@@ -7,7 +7,7 @@ export const elections = [
 	candidateIds:[0,1,2,3],
 	startDay:'20/1/2020',
 	endDay:'20/8/2020',
-	isClose:false,
+	status:1,
 	voteCount: 25
 },
 {
@@ -17,7 +17,7 @@ export const elections = [
 	candidateIds:[0,2],
 	startDay:'20/1/2020',
 	endDay:'20/8/2020',
-	isClose:false,
+	status:1,
 	voteCount: 25
 },
 {
@@ -27,7 +27,7 @@ export const elections = [
 	candidateIds:[1,2],
 	startDay:'20/1/2020',
 	endDay:'20/8/2020',
-	isClose:true,
+	status:2,
 	voteCount: 14
 },
 {
@@ -37,7 +37,7 @@ export const elections = [
 	content:'This is United State Presidence Election description',
 	startDay:'20/1/2020',
 	endDay:'20/8/2020',
-	isClose:true,
+	status:1,
 	voteCount: 12
 },
 {
@@ -47,7 +47,7 @@ export const elections = [
 	candidateIds:[0,1,2,3],
 	startDay:'20/1/2020',
 	endDay:'20/8/2020',
-	isClose:false,
+	status:1,
 	voteCount: 25
 },
 {
@@ -57,7 +57,7 @@ export const elections = [
 	candidateIds:[0,2],
 	startDay:'20/1/2020',
 	endDay:'20/8/2020',
-	isClose:false,
+	status:2,
 	voteCount: 25
 },
 {
@@ -67,7 +67,7 @@ export const elections = [
 	candidateIds:[1,2],
 	startDay:'20/1/2020',
 	endDay:'20/8/2020',
-	isClose:true,
+	status:2,
 	voteCount: 14
 },
 {
@@ -77,7 +77,7 @@ export const elections = [
 	content:'This is United State Presidence Election description',
 	startDay:'20/1/2020',
 	endDay:'20/8/2020',
-	isClose:true,
+	status:2,
 	voteCount: 12
 },
 ]
