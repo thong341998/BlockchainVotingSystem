@@ -18,10 +18,17 @@ blockmodel.find(function(err,re){
 })
 
 
-router.get('/posting',async (req, res, next) => {
-  let {VoteId}=req.body;
-  let result = await posting.findOne({"_id":VoteId});
-  res.json(result);
+router.get('/posting/:id',async (req, res, next) => {
+  let _id = req.params.id;
+  let result = await posting.findOne({"_id":_id.toString()});
+  console.log("result: ",result)
+  let tem =[...result.ListpersonId]
+  for(var i=0 ;i<tem.length;i++){
+    tem[i]=0;
+  }
+  let KQ = await myChain.getBalanceOfAddress(_id.toString(),tem);
+ 
+  res.json({result,KQ});
 
 })
 
@@ -55,6 +62,7 @@ router.get('/block', (req, res, next) => {
 router.post('/vote',async (req, res, next) => { 
   var {publicKey,privateKey,VoteId,personId} =req.body;
   let re = await posting.findOne({"_id":VoteId});
+  console.log("re: ",re)
   const myKey = ec.keyFromPrivate(privateKey);
   const tx1 = new Transaction(publicKey, VoteId,re.ListpersonId,personId);
   tx1.signTransaction(myKey);
