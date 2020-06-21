@@ -4,9 +4,18 @@ import {transactions} from '../Blockchain/Transaction/transaction-data';
 import {elections} from '../Vote/election-data';
 import {account} from '../Authentication/account-data';
 import VoteList from '../Vote/vote-list';
+import Axios from 'axios';
+
 
 export default function  ViewMyVoteScreen({navigation}){
 	
+	const voteDatas = () =>{
+		Axios.get('http://10.0.2.2:3000/posting')
+		.then(response => {
+			console.log('vote datas:',response.data);
+		})
+		.catch(error => console.log(error));
+	}
 
 	const myTransaction = transactions.filter(trans => trans.voterPublicKey === account.publicKey);
 	const getVotesByAccount = (accountTransactions) =>{
