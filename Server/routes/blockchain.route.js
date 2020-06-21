@@ -81,9 +81,9 @@ router.post('/posting', async (req, res, next) => {
   res.json(result);
 })
 
-router.post('/delposting', async (req, res, next) => {
-  let { _id } = req.body;
-  await posting.updateOne({"_id":_id,"status":1} );
+router.post('/setposting', async (req, res, next) => {
+  let { _id ,status} = req.body;
+  await posting.updateOne({"_id":_id,"status":status} );
   res.json(true);
 })
 
