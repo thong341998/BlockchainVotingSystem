@@ -21,6 +21,7 @@ blockmodel.find(function (err, re) {
 
 router.get('/posting/:id', async (req, res, next) => {
   let _id = req.params.id;
+
   let result = await posting.findOne({ "_id": _id.toString() });
 
   let tem = [...result.ListpersonId]
@@ -34,6 +35,36 @@ router.get('/posting/:id', async (req, res, next) => {
   }
   res.json({ result, KQ ,voteCount});
 
+})
+
+
+router.get('/posting', async (req, res, next) => {
+  let result = await posting.find();
+  
+  let re=[];
+  for (var i = 0; i < result.length; i++) {
+    console.log("i: ",i)
+    let tem = [...result[i].ListpersonId]
+    for (var j = 0; j < tem.length; j++) {
+      tem[j] = 0;
+    }
+    console.log("result[i]._id: ",result[i]._id)
+    let KQ = await myChain.getBalanceOfAddress((result[i]._id).toString(), tem);
+    
+    let voteCount = 0;
+    for (var k = 0; k < KQ.length;k++) {
+      console.log("voteCount: ",KQ[k])
+      voteCount+= KQ[k];
+    }
+    
+    let t={
+      post:result[i],
+      KQ,
+      voteCount
+    }
+    re.push(t);
+  }
+  res.json({re})
 })
 
 router.post('/posting', async (req, res, next) => {
@@ -52,6 +83,20 @@ router.get('/history', (req, res, next) => {
   }
   res.json({ result });
 })
+
+router.get('/history/:id', (req, res, next) => {
+  let id = req.params.id;
+  var result = [];
+  for (const block of myChain.chain) {
+    for (const trans of block.transactions) {
+      if(trans.pubKey===id){
+        result.push(trans)
+      }
+    }
+  }
+  res.json({ result });
+})
+
 
 router.get('/block', (req, res, next) => {
   var result = [];
