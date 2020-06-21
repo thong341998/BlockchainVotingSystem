@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
     View,
     Text,
@@ -15,8 +15,11 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useTheme } from 'react-native-paper';
 import Axios from 'axios';
 import { navigationName } from '../../global/globalConstants';
+import {AuthenticationContext} from '../../provider/authentication-provider';
 
 const LoginScreen = (props) => {
+
+    const authenticationContext = useContext(AuthenticationContext);
 
     const [data, setData] = React.useState({
         username: '',
@@ -85,23 +88,19 @@ const LoginScreen = (props) => {
     }
 
     const onPressLogin = async () => {
-        // if (data.isValidUser && data.isValidPassword) {
       
-        //     // await Axios.post('http://child-safety-api.herokuapp.com/api/auth/signin', {
-        //     //     username: data.username,
-        //     //     password: data.password
-        //     // })
-        //     // .then(response =>
-        //     //     {
-        //     //         props.navigation.navigate(navigationName.AdminHomeScreen);
-        //     //     })
-        //     // .catch(error => console.log("loi dang nhap"));
-        //     if (data.username === 'admin' && data.password === 'admin'){
-        //         props.navigation.navigate(navigationName.MainBottomTab);
-        //     }
-        // }
-        props.navigation.navigate(navigationName.mainDrawerNavigator);
-
+        await Axios.post('http://10.0.2.2:3000/login',{
+            usermane:data.username,
+            publicKey:data.password
+        })
+        .then(response => {
+            if (response !== false){
+                props.navigation.navigate(navigationName.mainDrawerNavigator);
+                authenticationContext.setAuthentication({username:data.username,publicKey:response.data.publicKey});
+            }
+            //console.log('Login with:',response.data);
+        })
+        .catch(error => console.log(error));
     }
 
     return (
@@ -201,7 +200,7 @@ const LoginScreen = (props) => {
 
                     <TouchableOpacity
                         style={styles.signIn}
-                        onPress={() => { navigation.navigate(navigationName.signUpScreen) }}
+                        onPress={() => { props.navigation.navigate(navigationName.signUpScreen) }}
                     >
 
                         <Text style={[styles.textSign, {

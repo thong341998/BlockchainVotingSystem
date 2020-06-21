@@ -1,21 +1,27 @@
-import React,{useState} from 'react';
+import React,{useState, useContext} from 'react';
 import {View, StyleSheet, Text, TextInput, Alert,Button, TouchableWithoutFeedback} from 'react-native';
 import Textarea from 'react-native-textarea';
+import {AuthenticationContext} from '../../provider/authentication-provider';
+import Axios from 'axios';
+
+const onVotingButtonPress = (publicKey,privateKey, voteId, candidateId) =>{
+		Alert.alert('Voting Successfully','Your vote is now confirm');
+	}
 
 export default function  VoteScreen(props){
 	const [privateKey,setPrivateKey] = useState('Place your private key here');
 
+	const authenticationContext = useContext(AuthenticationContext);
+	const account = authenticationContext.authentication;
+	//console.log(account);
+
 	const accountPrivateKey = '430b4033b5f7a980e6d024f2ca50987aee2ac93bcbb5c15bf4d6a493224f7ade';
 
 	const candidate = props.route.params.candidate;
+	const voteId = props.route.params.voteId;
 	const signature = '430b4033b5f7a980e6d024f2ca50987aee2ac93bcbb5c15bf4d6a493224f7ade';
-	const account = {
-		id:0,
-		username:'thong',
-		pass:'123',
-		publicKey:'0454abb1fc29b93927c1b124b8489929013b8bfde1f37baa8c0c98352ac15f23a8402f9f7eb4ad5416bbed7d49abe7ebfa186ec9802311a58bd16d27907a7e556e',
-		displayName:'Thong'
-	}
+	
+
 
 	return (
 		<View style = {{marginTop:20,marginHorizontal:15, justifyContent:'space-around'}}>
@@ -36,7 +42,7 @@ export default function  VoteScreen(props){
     underlineColorAndroid={'transparent'}
 		/>
 
-		<TouchableWithoutFeedback onPress = {() => Alert.alert('Your vote is now pending',`Your signature is:\n${signature}`)}>
+		<TouchableWithoutFeedback onPress = {() => onVotingButtonPress(account.publicKey,privateKey,voteId,candidate.id)}>
 		<View style = {{height:40,marginTop:20,backgroundColor:'dodgerblue',justifyContent:'center', alignItems:'center'}}> 
 		<Text style = {{fontSize:20,color:'white'}}>VOTE</Text>
 		</View>

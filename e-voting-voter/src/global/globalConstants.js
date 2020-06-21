@@ -12,7 +12,8 @@ export const navigationName = {
 	viewMyVoteStack:'MyVoteStack',
 	voteResultScreen:'VoteResult',
 	loginScreen:'Login',
-	mainDrawerNavigator:'mainDrawerNavigator'
+	mainDrawerNavigator:'mainDrawerNavigator',
+	signUpScreen:'SignUp'
 }
 
 export const globalStyles = StyleSheet.create({
