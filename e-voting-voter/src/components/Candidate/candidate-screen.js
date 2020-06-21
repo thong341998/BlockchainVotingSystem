@@ -9,15 +9,6 @@ export default function  CandidateScreen(props){
 	const vote = props.route.params.vote;
 	const readonly = props.route.params.readonly;
 	const selectedIndex = props.route.params.selectedIndex;
-	const getCandidate = () =>{
-		const result = [];
-		vote.candidateIds.forEach((id) =>{
-			var candidate = candidates.find((candidate) => candidate.id === id);
-			if (candidate)
-				result.push(candidate);
-		})
-		return result;
-	}
 	//console.log(vote);
 
 	return (
@@ -36,7 +27,7 @@ export default function  CandidateScreen(props){
 			}}>
 		<Text style = {styles.description}>{vote.startDay} - {vote.endDay}</Text>
 		</View>
-		<CandidateList selectedIndex ={selectedIndex}  readonly = {readonly} navigation = {props.navigation} candidates = {getCandidate()} />
+		<CandidateList selectedIndex ={selectedIndex}  readonly = {readonly} navigation = {props.navigation} candidates = {vote.candidates} />
 		</ScrollView>
 	);
 }

@@ -2,18 +2,9 @@ import React from 'react';
 import {View, StyleSheet, FlatList,Text} from 'react-native';
 import {transactions} from '../Blockchain/Transaction/transaction-data';
 import {account} from '../Authentication/account-data';
-import {candidates} from '../Candidate/candidate-data';
 
 
-const getCandidate = (vote,candidates) =>{
-		const result = [];
-		vote.candidateIds.forEach((id) =>{
-			var candidate = candidates.find((candidate) => candidate.id === id);
-			if (candidate)
-				result.push(candidate);
-		})
-		return result;
-	}
+
 
 const CandidateVoteCountItem = (props) =>{
 	return (
@@ -28,9 +19,8 @@ export default function  VoteResultScreen(props){
 	
 	const vote = props.route.params.vote;
 	const transForVoteId  = transactions.filter(trans => trans.data.voteId === vote.id);
-	const candidatesByVoteId = getCandidate(vote,candidates);
 	const candidatesResult = [];
-	candidatesByVoteId.forEach(cand => {
+	vote.candidates.forEach(cand => {
 		candidatesResult.push({
 			candidate:cand,
 			voteCount:0

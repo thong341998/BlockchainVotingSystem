@@ -21,7 +21,7 @@ export const transactions = [
 	data:{
 		
 		voteId:1,
-		candidateId:2,
+		candidateId:0,
 	}
 },
 {
@@ -45,7 +45,7 @@ export const transactions = [
 	createTime:'20/9/2020',
 	data:{
 		voteId:3,
-		candidateId:3,
+		candidateId:0,
 	}
 },
 {
@@ -57,7 +57,7 @@ export const transactions = [
 	createTime:'20/9/2020',
 	data:{
 		voteId:0,
-		candidateId:2,
+		candidateId:0,
 	}
 },
 {
@@ -69,7 +69,7 @@ export const transactions = [
 	createTime:'20/9/2020',
 	data:{
 		voteId:1,
-		candidateId:2,
+		candidateId:1,
 	}
 },
 {
@@ -81,7 +81,7 @@ export const transactions = [
 	createTime:'20/9/2020',
 	data:{
 		voteId:2,
-		candidateId:2,
+		candidateId:0,
 	}
 },
 

@@ -1,3 +1,5 @@
 node_modules
 e-voting/node_modules
 e-voting/.expo/
+e-voting-voter/.expo/packager-info.json
+e-voting-voter/.expo/settings.json
