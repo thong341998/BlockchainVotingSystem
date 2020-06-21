@@ -28,6 +28,7 @@ const CandidateItem = (props) => {
 
 export default function ElectionScreen(props) {
     let election = props.route.params.election;
+    let candidateList = election.post.ListpersonId;
     let candidatesList = Axios.get('http://localhost:3000/posting', {
 
     }).then(res => {
@@ -196,7 +197,7 @@ export default function ElectionScreen(props) {
     return (
         <View style={styles.container}>
             <FlatList
-                data={candidates}
+                data={candidateList}
                 renderItem={({ item }) => <CandidateItem name={item.name} description={item.description} />}
                 ItemSeparatorComponent={() => renderSeperator()}
                 keyExtractor={item => item.id.toString()}
