@@ -4,7 +4,9 @@ let posting = new mongoose.Schema({
     content: String,
     title: String,
     ListpersonId: [""],
-    delete: false,
+    delete: Boolean,
+    startDay:String,
+    endDay:String
 })
 
 
