@@ -70,8 +70,21 @@ router.get('/posting', async (req, res, next) => {
 router.post('/posting', async (req, res, next) => {
   let { content, title, ListpersonId, endDay } = req.body;
   let startDay = moment().format('YYYY-MM-DD');
-  let result = await posting.insertMany({ content, title, ListpersonId, startDay, endDay, delete: false });
+  let result = await posting.insertMany({ content, title, ListpersonId, startDay, endDay, status: 0 });
   res.json(result);
+})
+
+router.post('/posting', async (req, res, next) => {
+  let { content, title, ListpersonId, endDay } = req.body;
+  let startDay = moment().format('YYYY-MM-DD');
+  let result = await posting.insertMany({ content, title, ListpersonId, startDay, endDay, status: 0 });
+  res.json(result);
+})
+
+router.post('/delposting', async (req, res, next) => {
+  let { _id } = req.body;
+  await posting.updateOne({"_id":_id,"status":1} );
+  res.json(true);
 })
 
 router.get('/history', (req, res, next) => {
