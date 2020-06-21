@@ -201,7 +201,7 @@ const LoginScreen = (props) => {
 
                     <TouchableOpacity
                         style={styles.signIn}
-                        onPress={() => { navigation.navigate(navigationName.signUpScreen) }}
+                        onPress={() => { props.navigation.navigate(ScreenKey.SignUpScreen) }}
                     >
 
                         <Text style={[styles.textSign, {

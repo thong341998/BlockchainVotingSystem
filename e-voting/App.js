@@ -8,6 +8,7 @@ import { ScreenKey } from './src/global/globalConstants';
 import LoginScreen from './src/components/Login/LoginScreen';
 import ElectionScreen from './src/components/Admin/Election/ElectionScreen';
 import MainBottomTab from './src/routes/MainBottomTab';
+import SignUpScreen from './src/components/Signup/SignupScreen';
 
 
 const Stack = createStackNavigator();
@@ -17,6 +18,10 @@ const AppStackNavigator = () => {
       <Stack.Screen
         name={ScreenKey.LoginScreen}
         component={LoginScreen}
+        options={{ headerShown: false }} />
+      <Stack.Screen
+        name={ScreenKey.SignUpScreen}
+        component={SignUpScreen}
         options={{ headerShown: false }} />
       <Stack.Screen
         name={ScreenKey.MainBottomTab}

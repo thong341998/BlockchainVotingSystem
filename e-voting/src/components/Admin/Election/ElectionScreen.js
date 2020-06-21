@@ -185,7 +185,7 @@ export default function ElectionScreen(props) {
             data = {candidates}
             renderItem = {({item}) =>  <CandidateItem name={item.name} description = {item.description} />} 
             ItemSeparatorComponent = {() => renderSeperator()}
-            keyExtractor = {item => item.id} 
+            keyExtractor = {item => item.id.toString()} 
               />
 
             <Modal isVisible={modalOpen} animationType='slide'
