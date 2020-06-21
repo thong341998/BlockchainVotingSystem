@@ -1,6 +1,7 @@
 const SHA256 = require("crypto-js/sha256");
 const EC = require('elliptic').ec;
 const ec = new EC('secp256k1');
+const moment = require('moment');
 let transmodel = require('../model/transaction');
 let blockmodel = require('../model/block');
 class Block {
@@ -83,6 +84,14 @@ class Blockchain {
         // if (transaction.amount <= 0) {
         //     throw new Error('Transaction amount should be higher than 0');
         // }
+        for (const block of this.chain) {
+            for (const trans of block.transactions) {
+                if(trans.pubKey===transaction.pubKey && trans.VoteId===transaction.VoteId){
+                    console.log("abc")
+                    throw new Error('Could not vote again');
+                }
+            }
+          }
 
         this.pendingTransactions = [];
         this.pendingTransactions.push(transaction);
@@ -145,7 +154,7 @@ class Transaction {
         this.VoteId = VoteId;
         this.ListpersonId = ListpersonId;
         this.personId = personId;
-        this.date = Date.now().toString();
+        this.date = moment().format('YYYY-MM-DD');
     }
     calculateHash() {
         return SHA256(this.previousHash + this.timestamp + JSON.stringify(this.transactions) + this.nonce).toString();
