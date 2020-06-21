@@ -27,76 +27,83 @@ const CandidateItem = (props) => {
 }
 
 export default function ElectionScreen(props) {
-    let  election  = props.route.params.election;
+    let election = props.route.params.election;
+    let candidatesList = Axios.get('http://localhost:3000/posting', {
+
+    }).then(res => {
+
+    }).catch(error => {
+
+    })
     //console.log('',);
 
     const [modalOpen, setModalOpen] = useState(false);
     const [candidateName, setCandidateName] = useState('');
-    const [candidateDescription,setCandidateDescription] =useState(''); 
+    const [candidateDescription, setCandidateDescription] = useState('');
 
     const [candidates, setCandidates] = useState([
         {
-            id:0,
+            id: 0,
             name: 'Roanaldo',
-            description:'Vote for me'
+            description: 'Vote for me'
         },
         {
-            id:1,
+            id: 1,
             name: 'Messi',
-            description:'Vote for me'
+            description: 'Vote for me'
         }
     ]);
 
-    const showStartVotingButton = () =>{
-        if (election.status  === 0)
-            return ( <TouchableOpacity
-                    style={{
-                        backgroundColor: 'blue',
-                        borderRadius: 5,
-                        width: 100,
-                        height: 50,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginLeft: 10,
-                        alignSelf: 'center',
-                        marginTop: 10
-                    }}
+    const showStartVotingButton = () => {
+        if (election.status === 0)
+            return (<TouchableOpacity
+                style={{
+                    backgroundColor: 'blue',
+                    borderRadius: 5,
+                    width: 100,
+                    height: 50,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginLeft: 10,
+                    alignSelf: 'center',
+                    marginTop: 10
+                }}
 
-                    onPress={() => AddElection()}
-                >
-                    <Text>Start voting</Text>
-                </TouchableOpacity>
-                )
+                onPress={() => AddElection()}
+            >
+                <Text>Start voting</Text>
+            </TouchableOpacity>
+            )
         return null;
     }
 
 
 
-    const showAddCandidateButton = () =>{
-        if (election.status === 0 ){
+    const showAddCandidateButton = () => {
+        if (election.status === 0) {
             return (<TouchableOpacity
-                    style={{
-                        backgroundColor: 'blue',
-                        borderRadius: 5,
-                        width: 100,
-                        height: 50,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginLeft: 10,
-                        alignSelf: 'center',
-                        marginTop: 10
-                    }}
+                style={{
+                    backgroundColor: 'blue',
+                    borderRadius: 5,
+                    width: 100,
+                    height: 50,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginLeft: 10,
+                    alignSelf: 'center',
+                    marginTop: 10
+                }}
 
-                    onPress={() => setModalOpen(true)}
-                >
-                    <Text>Add candidate</Text>
-                </TouchableOpacity>)
+                onPress={() => setModalOpen(true)}
+            >
+                <Text>Add candidate</Text>
+            </TouchableOpacity>)
         }
         return null;
     }
 
-    const showCloseVotingButton = () =>{
-        if (election.status === 1){
+    const showCloseVotingButton = () => {
+        if (election.status === 1) {
             return (
                 <TouchableOpacity
                     style={{
@@ -115,7 +122,7 @@ export default function ElectionScreen(props) {
                 >
                     <Text>Stop voting</Text>
                 </TouchableOpacity>
-                )
+            )
         }
         return null;
     }
@@ -124,13 +131,13 @@ export default function ElectionScreen(props) {
 
     }
 
-    const AddCandidate = (candidateName,candidateDescription) => {
+    const AddCandidate = (candidateName, candidateDescription) => {
         //console.log('candidateName', candidateName);
 
         let candidate = {
             id: candidates.length + 1,
             name: candidateName,
-            description:candidateDescription
+            description: candidateDescription
         }
         setCandidates((preCandidates) => {
             return [candidate, ...preCandidates];
@@ -148,45 +155,52 @@ export default function ElectionScreen(props) {
     }
 
     const AddElection = async () => {
+
         if (candidates && candidates.length > 0) {
-            await Axios.post('http://localhost:3000/posting', {
-                content: 'Khong co',
+            let item = {
+                content: election.title,
                 title: election.title,
-                ListpersonId: candidates
+                ListpersonId: candidates,
+                endDay: Date.now().toString()
+            }
+            Axios.post('http://localhost:3000/posting', {
+                item
             })
                 .then(response => {
                     Alert.alert('Election is now starting !!!')
+                    console.log("response", response);
                 })
-                .catch(error => console.log("loi dang nhap"));
+                .catch(error => console.log("loi posting"));
+
         }
 
     }
 
     const renderCandidate = (item, index) => {
-        return <CandidateItem name={item.name} description = {item.description}
+        return <CandidateItem name={item.name} description={item.description}
             vote={0}
             key={index} />
     }
 
-    const renderSeperator = () =>{
+    const renderSeperator = () => {
         return (
-             <View
-        style={[{
-          height: 0.75,
-          backgroundColor: "#CED0CE",
-        },props.titleStyle]}
-      />
-            )
+            <View
+                style={[{
+                    height: 0.75,
+                    backgroundColor: "#CED0CE",
+                }, props.titleStyle]}
+            />
+        )
     }
 
     return (
         <View style={styles.container}>
             <FlatList
-            data = {candidates}
-            renderItem = {({item}) =>  <CandidateItem name={item.name} description = {item.description} />} 
-            ItemSeparatorComponent = {() => renderSeperator()}
-            keyExtractor = {item => item.id.toString()} 
-              />
+                data={candidates}
+                renderItem={({ item }) => <CandidateItem name={item.name} description={item.description} />}
+                ItemSeparatorComponent={() => renderSeperator()}
+                keyExtractor={item => item.id.toString()}
+            />
 
             <Modal isVisible={modalOpen} animationType='slide'
                 style={{
@@ -209,7 +223,7 @@ export default function ElectionScreen(props) {
                     }}
                         onChangeText={text => setCandidateName(text)}
                     />
-                     <TextInput placeholder='Candidate description' style={{
+                    <TextInput placeholder='Candidate description' style={{
                         width: screenWidth - 100,
                         margin: 10,
                         height: 20
@@ -229,7 +243,7 @@ export default function ElectionScreen(props) {
                             }}
 
                             onPress={() => {
-                                AddCandidate(candidateName,candidateDescription)
+                                AddCandidate(candidateName, candidateDescription)
                             }}
                         >
                             <Text>Add</Text>
@@ -255,9 +269,9 @@ export default function ElectionScreen(props) {
             </Modal>
 
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-               {showStartVotingButton()}
+                {showStartVotingButton()}
                 {showAddCandidateButton()}
-               {showCloseVotingButton()}
+                {showCloseVotingButton()}
             </View>
 
         </View>

@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, Dimensions, TextInput } from 'react-native'
 import Modal from 'react-native-modal';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ScreenKey } from '../../../global/globalConstants';
 import DatePicker from 'react-native-datepicker';
 import StatusRound from '../../Common/status-round';
+import Axios from 'axios';
 
 
 const Card = (props) => {
@@ -27,23 +28,7 @@ export default function AdminHome(props) {
     const [endDay, setEndDay] = useState();
 
 
-    const [elections, setElections] = useState([
-        {
-            voteId: 0,
-            title: 'Election 1',
-            status:0,
-        },
-        {
-            voteId: 1,
-            title: 'Election 2',
-            status:1
-        },
-        {
-            voteId: 2,
-            title: 'Election 3',
-            status:2
-        }
-    ])
+    const [elections, setElections] = useState([])
 
     const onHandlePress = (item, id) => {
         props.navigation.navigate(ScreenKey.ElectionScreen, {
@@ -51,14 +36,25 @@ export default function AdminHome(props) {
         })
     }
 
+    useEffect(() => {
+        Axios.get(`http://192.168.1.4:3000/posting`)
+            .then(res => {
+              console.log('dataaaaaaaaaaa', res.data.re);
+              setElections(res.data.re)
+            })
+            .catch(error => {
+                console.log("posting failed")
+            })
+    }, [])
+
     const renderElection = (item) => {
         return (
             <TouchableOpacity onPress={() => {
                 onHandlePress(item)
             }}>
                 <Card>
-                    <Text style={styles.titleText}>{item.title}</Text>
-                    <StatusRound style = {{marginLeft:40}} status = {item.status} />
+                    <Text style={styles.titleText}>{item.post.title}</Text>
+                    <StatusRound style = {{marginLeft:40}} status = {item.post.status} />
                 </Card>
             </TouchableOpacity>
         );
@@ -68,9 +64,19 @@ export default function AdminHome(props) {
         if (electionName){
             let election = {
                 voteId: elections.length + 1,
-                title: electionNamesta,
+                title: electionName,
                 status:0,
             }
+            // Axios.get(`http://localhost:3000/posting`)
+            // .then(res => {
+            //   console.log(res);
+            //   console.log(res.data);
+            //   election.voteId = res._id
+            // })
+            // .catch(error => {
+            //     console.log("posting failed")
+            // })
+            console.log('election', election);
             
             setElections((currentElections) =>{
                 return [election, ...currentElections];
@@ -202,7 +208,7 @@ export default function AdminHome(props) {
             <FlatList
                 data={elections}
                 renderItem={({ item }) => renderElection(item)}
-                keyExtractor={item => item.voteId.toString()}
+                keyExtractor={item => item.post._id}
             />
         </View>
     )
