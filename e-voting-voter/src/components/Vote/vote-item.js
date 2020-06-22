@@ -8,7 +8,7 @@ import StatusRound from '../../components/Common/status-round';
 export default function  VoteItem(props){
 
 	const vote = props.vote;
-	
+	console.log('vote item: ',vote);
 
 	return (
 		<TouchableWithoutFeedback onPress = {props.onPress}>

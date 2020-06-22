@@ -12,6 +12,8 @@ import ViewMyVoteStack from './src/components/Vote/view-my-vote-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {navigationName} from './src/global/globalConstants';
 import LoginScreen from './src/components/Login/login-screen';
+import SignUpScreen from './src/components/Login/sign-up-screen';
+import AuthenticationProvider from './src/provider/authentication-provider';
 
 const MainDrawerNavigator = () =>{
   const Drawer = createDrawerNavigator();
@@ -30,6 +32,7 @@ const MainStackNavigation = () =>{
   return (
        <Stack.Navigator>
   <Stack.Screen options = {{headerShown:false}} name = {navigationName.loginScreen} component = {LoginScreen} />
+  <Stack.Screen options = {{headerShown:false}} name = {navigationName.signUpScreen} component = {SignUpScreen} />
   <Stack.Screen options = {{headerShown:false}} name = {navigationName.mainDrawerNavigator} component = {MainDrawerNavigator} />
   </Stack.Navigator>
     )
@@ -39,9 +42,11 @@ const MainStackNavigation = () =>{
 
 export default function App() {
   return (
+    <AuthenticationProvider>
     <NavigationContainer>
      <MainStackNavigation />
     </NavigationContainer>
+    </AuthenticationProvider>
    // <CandidateScreen />
   );
 }

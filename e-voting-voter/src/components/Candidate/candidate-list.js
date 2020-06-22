@@ -13,7 +13,11 @@ export default function  CandidateList(props){
 			[
 			{
 			 text:'Yes',
-			 onPress: () => props.navigation.navigate(navigationName.voteScreen,{candidate:candidate})
+			 onPress: () => props.navigation.navigate(navigationName.voteScreen,
+			 	{
+			 		candidate:candidate,
+			 		voteId:props.voteId
+			 	})
 			},
 			{
 				text:'No',

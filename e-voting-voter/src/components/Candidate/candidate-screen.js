@@ -27,7 +27,7 @@ export default function  CandidateScreen(props){
 			}}>
 		<Text style = {styles.description}>{vote.startDay} - {vote.endDay}</Text>
 		</View>
-		<CandidateList selectedIndex ={selectedIndex}  readonly = {readonly} navigation = {props.navigation} candidates = {vote.candidates} />
+		<CandidateList voteId = {vote.id} selectedIndex ={selectedIndex}  readonly = {readonly} navigation = {props.navigation} candidates = {vote.candidates} />
 		</ScrollView>
 	);
 }

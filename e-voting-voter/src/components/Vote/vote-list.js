@@ -31,7 +31,7 @@ export default function  VoteList(props){
 			)
 	}
 
-	const relatedTransactionVoteData = props.relatedTransactionVoteData; 
+	const relatedTransactionVoteData = props.relatedsTransactionVoteData; 
 	const accountTransactions = props.accountTransactions;
 
 
@@ -45,6 +45,7 @@ export default function  VoteList(props){
 	}
 
 	const data = props.voteData;
+	//console.log('vote data:',data);
 	return (
 		<View>
 			<FlatList style = {{marginTop:5,marginHorizontal:15}}
