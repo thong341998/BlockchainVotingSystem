@@ -6,16 +6,32 @@ import {account} from '../Authentication/account-data';
 import VoteList from '../Vote/vote-list';
 import Axios from 'axios';
 
-
-export default function  ViewMyVoteScreen({navigation}){
-	
-	const voteDatas = () =>{
-		Axios.get('http://10.0.2.2:3000/posting')
+const getVoteDatas =  () =>{
+		  Axios.get('http://10.0.2.2:3000/posting')
 		.then(response => {
-			console.log('vote datas:',response.data);
+			response.data.re.forEach((obj) =>{
+				var post = obj.post;
+				voteDatas.push({
+					id: post._id,
+					description:post.content,
+					startDay:post.startDay,
+					endDay:post.endDay,
+					status:post.status,
+					voteCount:obj.voteCount,
+					title:post.title,
+					candidates:[...post.ListpersonId],
+					content:post.content
+				});
+			})
+			//console.log('vote datas:',voteDatas)
 		})
 		.catch(error => console.log(error));
 	}
+
+export default function  ViewMyVoteScreen({navigation}){
+	
+	const voteDatas = [];
+	getVoteDatas();
 
 	const myTransaction = transactions.filter(trans => trans.voterPublicKey === account.publicKey);
 	const getVotesByAccount = (accountTransactions) =>{

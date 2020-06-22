@@ -5,7 +5,23 @@ import {AuthenticationContext} from '../../provider/authentication-provider';
 import Axios from 'axios';
 
 const onVotingButtonPress = (publicKey,privateKey, voteId, candidateId) =>{
-		Alert.alert('Voting Successfully','Your vote is now confirm');
+		/*console.log(`voting with ${publicKey}-${privateKey}-${voteId}-${candidateId}`);
+		Axios.post('http://10.0.2.2:3000/vote',{
+			publicKey:publicKey,
+			privateKey:privateKey,
+			VoteId:voteId,
+			personId:candidateId
+		})
+		.then(response =>{
+			console.log(response);
+			Alert.alert('Voting Successfully','Your vote is now confirm');
+		})
+		.catch(error =>{
+			console.log(error);
+		})*/
+		const signature ='30440220631eb721358fe4214d4b86ccfa068f9259ae6aa15b0e4f6c9ca5b2924793d7820220519ae6edd700e905fbc82c6ff4d3449fc91897a1637352cb4187285e99f7ca16';
+		Alert.alert('Voting Successfully',`Your signature is ${signature}`);
+		
 	}
 
 export default function  VoteScreen(props){
